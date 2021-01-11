@@ -76,9 +76,3 @@ class SparseGraphFormat:
 
         self.vertices = ordering
         return self.vertices
-
-    def gaussian_elimination(self):
-        pass
-
-    def lu_self_storage(self):
-        pass
