@@ -32,7 +32,7 @@ class Vertex:
         return str(self.id + 1)
 
 
-class SparseGraphFormat:
+class SparseSymetricGraphFormat:
     def __init__(self, size: int, initializer: List[Tuple[int, int, any]]):
         self.vertices = [Vertex(id) for id in range(size)]
         
