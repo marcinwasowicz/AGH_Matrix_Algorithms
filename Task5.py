@@ -76,3 +76,7 @@ class SparseSymetricGraphFormat:
 
         self.vertices = ordering
         return self.vertices
+
+    def cholesky_decomposition(self):
+        # todo implement cholesky decomposition to measure number of fill in with and withot ordering
+        pass
