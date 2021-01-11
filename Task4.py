@@ -67,6 +67,10 @@ class SparseMatrixGraph:
         self.graph[row].as_row[column] = value
         self.graph[column].as_column[row] = value
 
+        if abs(value) <= EPSILON:
+            del self.graph.as_row[column]
+            del self.graph[column].as_column[row]
+
     def __repr__(self):
         return str(self.graph)
 
