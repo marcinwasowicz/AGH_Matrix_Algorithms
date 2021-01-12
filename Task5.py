@@ -148,20 +148,18 @@ def generate_test(size, non_zero_count):
     return sparse1.lu_self_storage(), sparse2.lu_self_storage()
 
 
-def run_tests():
+def run_tests(size_start, size_end, nnz_factor):
     test_count = 0
     passed_count = 0
 
-    for size in range(100, 1001):
-        for nnz in [2*size, 3*size, 4*size, 5*size]:
+    for size in range(size_start, size_end):
+        for nnz in nnz_factor:
 
             test_count += 1
 
-            ordered, non_ordered = generate_test(size, nnz)
+            ordered, non_ordered = generate_test(size, nnz* size)
 
             if ordered > non_ordered:
                 passed_count += 1
 
     return passed_count/test_count
-
-print(run_tests())
