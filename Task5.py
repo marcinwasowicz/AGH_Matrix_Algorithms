@@ -125,7 +125,7 @@ class SparseGraphFormat:
         return fill_in_count
 
 
-def generate_test(size, non_zero_count):
+def generate_symetric_test(size, non_zero_count):
     assert size <= non_zero_count
     idxs = [idx for idx in range(size)]
     initializer = []
@@ -133,11 +133,21 @@ def generate_test(size, non_zero_count):
     for idx in idxs:
         initializer.append((idx, idx, random.uniform(1, 100)))
 
-    for _ in range(non_zero_count - size):
+    for _ in range((non_zero_count - size)//2):
+        x = random.choice(idxs)
+        y = random.choice(idxs)
+        val = random.uniform(1, 100)
+
         initializer.append((
-            random.choice(idxs),
-            random.choice(idxs),
-            random.uniform(1, 100)
+           x,
+           y, 
+           val
+        ))
+
+        initializer.append((
+            y,
+            x,
+            val
         ))
 
     sparse1 = SparseGraphFormat(size, initializer)
@@ -146,20 +156,3 @@ def generate_test(size, non_zero_count):
     sparse1.cuthil_mckee_ordering()
 
     return sparse1.lu_self_storage(), sparse2.lu_self_storage()
-
-
-def run_tests(size_start, size_end, nnz_factor):
-    test_count = 0
-    passed_count = 0
-
-    for size in range(size_start, size_end):
-        for nnz in nnz_factor:
-
-            test_count += 1
-
-            ordered, non_ordered = generate_test(size, nnz* size)
-
-            if ordered > non_ordered:
-                passed_count += 1
-
-    return passed_count/test_count
